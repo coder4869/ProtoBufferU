@@ -20,7 +20,7 @@ public class UserInfoConvert {
 		respBuilder.setUserName("Coder4869");
 		respBuilder.setIdNumber("101101201612121234");
 		respBuilder.setBirthday("2016.12.12");
-		respBuilder.setGender("MAN");
+		respBuilder.setGender("MALE");
 		
 		return respBuilder.build().toByteArray();
 	}
