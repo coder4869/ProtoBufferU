@@ -19,3 +19,10 @@ Reason:
   "optional" and "required" and "default" is supported on version 2.x, and no supported on version 3.x.
 Solution:
   remove "optional" and "required" and "default" keywords.
+
+## 4. ERROR: input ended unexpectedly in the middle of a field
+Info:
+  While parsing a protocol message, the input ended unexpectedly in the middle of a field. 
+  This could mean either than the input has been truncated or that an embedded message misreported its own length.
+Solution:
+
