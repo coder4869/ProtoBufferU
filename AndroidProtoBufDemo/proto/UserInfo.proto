@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package coder4869.demo.app.protobuf;
+
+message RequestInfo
+{
+	string user_name = 1;
+	int32 user_id = 2;
+}
+
+message ResponseInfo
+{
+	string user_name = 1;
+	int32 user_id = 2;
+	string id_number = 3;
+	string gender = 4;
+	string birthday = 5;
+}

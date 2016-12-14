@@ -1,0 +1,13 @@
+
+## Start Steps：
+1. downloads needed versions from [github repository](https://github.com/google/protobuf/releases).
+2. prepare an protocol buffer file named "*.proto" (eg. UserInfo/UserInfo.proto)
+3. build "*.proto" file.
+   For Windows (use "protoc-3.1.0-win32", and building for java)
+   [1].go to dir "D:\protoc-3.1.0-win32\bin"
+   [2].Run "protoc.exe --java_out=./ UserInfo.proto" 
+		(for this command, "UserInfo.proto" should be put in dir "D:\protoc-3.1.0-win32\bin")
+   [3].find "UserInfo.java" file in dir "D:\protoc-3.1.0-win32\bin\coder4869\demo\app\protobuf"
+   [4].copy "*.java"(UserInfo/coder4869/demo/app/protobuf/UserInfo.java) to target project 
+   [5].create parsing java class(UserInfo/coder4869/demo/app/protobuf/UserInfoConvert.java)
+   for detail usage refers to the "AndroidProtoBufDemo" project

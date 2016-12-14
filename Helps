@@ -1,0 +1,21 @@
+## 1. WARNING: No syntax specified for the proto file.
+Info:
+  [libprotobuf WARNING google/protobuf/compiler/parser.cc:547] No syntax specified for the proto file. 
+  Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. 
+  (Defaulted to proto2 syntax.)
+Solution:
+  put `syntax = "proto2";` to the first line in "*.proto" file. if `syntax = "proto3";` used, 
+  errors will occures like "optional is disallowed".
+
+## 2. ERROR: Missing field number.
+Solution:
+  add order number for each field. eg:
+  message ClassA {
+    required string name = 1;
+  }
+
+## 3. ERROR: optional(or required or default) is not allowed in proto3.
+Reason:
+  "optional" and "required" and "default" is supported on version 2.x, and no supported on version 3.x.
+Solution:
+  remove "optional" and "required" and "default" keywords.

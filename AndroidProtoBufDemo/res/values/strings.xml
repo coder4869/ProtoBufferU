@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ProtoBufDemo</string>
+    <string name="app_about">This is an sample project about using "Google Protocol Buffer" based on Socket! \n Please review log for detail.</string>
+
+</resources>

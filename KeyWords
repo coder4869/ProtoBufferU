@@ -1,0 +1,11 @@
+package : declare the file package name in java; 
+          declare the file namespace in c#;
+
+message : declare an class;          
+
+
+The following are not supported after version 3.0:
+
+required : declare no null value field;
+optional : declare optional field, which means values can be nullable;
+defalut	 : set default value for field, format: [defalut=FIELD_VALUE] (eg. [defalut="123"] OR [defalut=123] )
