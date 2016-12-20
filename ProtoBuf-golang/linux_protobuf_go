@@ -1,0 +1,115 @@
+#!/bin/bash
+
+
+:<<!BLOCK!
+Author:coder4869
+Email:coder4869@gmail.com
+Github:https://github.com/coder4869/ProtoBufferU
+Description:This document is used for build the environment for protobuf-go on liunx
+	Download tools from: https://github.com/google/protobuf/releases/
+	Installing for go refer to: https://github.com/coder4869/GoDev/wiki
+!BLOCK!
+
+
+:<<!BLOCK!
+Error: protoc command not found 
+Maybe the environment variables is not correctly set by this script,
+two environment variables should be added to "PATH" : $PROTO_BIN, $GOPATH_BIN
+!BLOCK!
+
+
+## $1 == BASHRC_File
+function downloadProto() {
+	DOWNLOAD=/home/$USER/Downloads/
+	PROTO_NAME=protoc-3.1.0-linux-x86_64
+	PROTO_PKG=$PROTO_NAME.zip
+	PROTO_PKG_PATH=$DOWNLOAD/$PROTO_PKG
+
+	if [ ! -e $PROTO_PKG_PATH ]; then 
+		echo "$PROTO_PKG not found! Please download and put it in dir download."
+		echo "Download Link: https://github.com/google/protobuf/releases/"
+		#https://github.com/google/protobuf/archive/v3.1.0.tar.gz
+		exit 0
+	else
+		cd $DOWNLOAD
+		sudo chmod 777 /opt
+		mkdir -p /opt/$PROTO_NAME
+		unzip $PROTO_PKG -d /opt/$PROTO_NAME
+	        if [ -z $PROTO_BIN ]; then
+(
+cat <<EOF
+export PROTO_BIN=/opt/$PROTO_NAME/bin
+export PATH=$PATH:$PROTO_BIN
+EOF
+) >> $1 # $1 == BASHRC_File
+        	fi
+	fi
+}
+
+## ensure GOPATH is ok, $1 == GOPATH, $2 == BASHRC_File
+
+function configGOPATH() {
+	if [ ! -x $1 ]; then
+		mkdir -p $1/src
+	fi
+
+	if [ -z $GOPATH ]; then
+(
+cat <<EOF
+export GOPATH=$1
+EOF
+) >> $2 # $2 == BASHRC_File
+	fi
+}
+
+
+## download Protobuf compile plugin protoc-gen-go (provides by goprotobuf)
+## $1 == GOPATH, $2 == BASHRC_File
+function configProtocGenGo() {
+	go get github.com/golang/protobuf/protoc-gen-go
+	cd $1/src/github.com/golang/protobuf/protoc-gen-go
+	go build 
+	go install
+        if [ -z $GOPATH_BIN ]; then
+(
+cat <<EOF
+export GOPATH_BIN=$1/bin
+export PATH=$PATH:$GOPATH_BIN
+EOF
+) >> $2 # $2 == BASHRC_File
+        fi
+}
+
+
+## download Protobuf compile plugin protoc-gen-go (provides by goprotobuf)
+## $1 == GOPATH
+function configProtocSupport() {
+        go get github.com/golang/protobuf/proto
+        cd $1/src/github.com/golang/protobuf/proto
+        go build
+        go install
+}
+
+
+## $1 == GOPATH
+function configTest() {
+        cd $1/src/github.com/golang/protobuf/proto/testdata
+	protoc --go_out=. test.proto
+	echo "Please Check Environment Variables!"
+}
+
+
+Go_Path="/home/$USER/Desktop/Go/GOPATH"
+BASHRC_File="/home/$USER/.bashrc"
+downloadProto $BASHRC_File
+echo "configGOPATH succeed"
+configGOPATH $Go_Path $BASHRC_File
+echo "configProtocGenGo succeed"
+configProtocGenGo $Go_Path $BASHRC_File
+echo "configProtocSupport succeed"
+configProtocSupport $Go_Path
+source $BASHRC_File
+configTest $Go_Path
+echo "finish"
+
+
